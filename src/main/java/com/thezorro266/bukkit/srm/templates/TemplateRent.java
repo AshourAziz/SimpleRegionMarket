@@ -24,7 +24,6 @@ import com.thezorro266.bukkit.srm.Utils;
 import com.thezorro266.bukkit.srm.exceptions.ContentSaveException;
 import com.thezorro266.bukkit.srm.factories.RegionFactory;
 import com.thezorro266.bukkit.srm.factories.SignFactory;
-import com.thezorro266.bukkit.srm.hooks.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -45,24 +44,7 @@ public class TemplateRent extends TemplateLease {
 		if (isRegionOccupied(region)) {
 			if (isRegionOwner(player, region)) {
 				// TODO: Player permissions
-				Economy ec = SimpleRegionMarket.getInstance().getEconomy();
-				double price = (Double) region.getOptions().get("price");
-				String playerAccount = player.getName();
-				String regionAccount = (String) region.getOptions().get("account");
-				if (ec.isEnabled() && price > 0) {
-					if (!ec.isValidAccount(playerAccount)) {
-						player.sendMessage(LanguageSupport.instance.getString("economy.player.no.account"));
-						return;
-					}
-					if (!ec.hasEnough(playerAccount, price)) {
-						player.sendMessage(LanguageSupport.instance.getString("economy.player.no.money"));
-						return;
-					}
-				}
-				ec.subtractMoney(playerAccount, price);
-				if (!regionAccount.isEmpty() && ec.isValidAccount(regionAccount)) {
-					ec.addMoney(regionAccount, price);
-				}
+				// TODO: Player money
 
 				int time = (Integer) region.getOptions().get("time");
 				int newtime = (Integer) region.getOptions().get("renttime") + time;
@@ -79,25 +61,7 @@ public class TemplateRent extends TemplateLease {
 			}
 		} else {
 			// TODO: Player permissions
-			Economy ec = SimpleRegionMarket.getInstance().getEconomy();
-			double price = (Double) region.getOptions().get("price");
-			String playerAccount = player.getName();
-			String regionAccount = (String) region.getOptions().get("account");
-			if (ec.isEnabled() && price > 0) {
-				if (!ec.isValidAccount(playerAccount)) {
-					player.sendMessage(LanguageSupport.instance.getString("economy.player.no.account"));
-					return;
-				}
-				if (!ec.hasEnough(playerAccount, price)) {
-					player.sendMessage(LanguageSupport.instance.getString("economy.player.no.money"));
-					return;
-				}
-			}
-			ec.subtractMoney(playerAccount, price);
-			if (!regionAccount.isEmpty() && ec.isValidAccount(regionAccount)) {
-				ec.addMoney(regionAccount, price);
-			}
-
+			// TODO: Player money
 			clearRegion(region);
 			if (buyerIsOwner) {
 				setRegionOwners(region, new OfflinePlayer[] { player });

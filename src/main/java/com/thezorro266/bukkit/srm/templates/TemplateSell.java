@@ -21,6 +21,7 @@ package com.thezorro266.bukkit.srm.templates;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.HashMap;
+<<<<<<< HEAD
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,6 +30,8 @@ import com.thezorro266.bukkit.srm.hooks.Economy;
 import com.thezorro266.bukkit.srm.hooks.Permissions;
 import com.thezorro266.bukkit.srm.templates.interfaces.OwnableTemplate;
 import org.bukkit.Bukkit;
+=======
+>>>>>>> parent of d5896f5... Added player money economy stuff
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
@@ -178,25 +181,7 @@ public class TemplateSell extends OwnableRegionTemplate {
 			}
 		} else {
 			// TODO: Player permissions
-			Economy ec = SimpleRegionMarket.getInstance().getEconomy();
-			double price = (Double) region.getOptions().get("price");
-			String playerAccount = player.getName();
-			String regionAccount = (String) region.getOptions().get("account");
-			if (ec.isEnabled() && price > 0) {
-				if (!ec.isValidAccount(playerAccount)) {
-					player.sendMessage(LanguageSupport.instance.getString("economy.player.no.account"));
-					return;
-				}
-				if (!ec.hasEnough(playerAccount, price)) {
-					player.sendMessage(LanguageSupport.instance.getString("economy.player.no.money"));
-					return;
-				}
-			}
-			ec.subtractMoney(playerAccount, price);
-			if (!regionAccount.isEmpty() && ec.isValidAccount(regionAccount)) {
-				ec.addMoney(regionAccount, price);
-			}
-
+			// TODO: Player money
 			clearRegion(region);
 			if (buyerIsOwner) {
 				setRegionOwners(region, new OfflinePlayer[] { player });
